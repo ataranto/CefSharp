@@ -115,9 +115,16 @@ namespace CefSharp
 
                 arrObj = managedArray->GetValue(i);
 
-                CefRefPtr<CefV8Value> cefObj = convertToCef(arrObj, arrObj->GetType());
+				if (arrObj != nullptr)
+				{
+					CefRefPtr<CefV8Value> cefObj = convertToCef(arrObj, arrObj->GetType());
 
-                cefArray->SetValue(i, cefObj);
+					cefArray->SetValue(i, cefObj);
+				}
+				else
+				{
+					cefArray->SetValue(i, CefV8Value::CreateNull());
+				}
             }
 
             return cefArray;
@@ -135,10 +142,17 @@ namespace CefSharp
                 CefString strFieldName = toNative(safe_cast<String^>(fieldName));
 
                 Object^ fieldVal = fields[i]->GetValue(obj);
-           
-                CefRefPtr<CefV8Value> cefVal = convertToCef(fieldVal, fieldVal->GetType());
 
-                cefArray->SetValue(strFieldName, cefVal);
+				if (fieldVal != nullptr)
+				{
+	                CefRefPtr<CefV8Value> cefVal = convertToCef(fieldVal, fieldVal->GetType());
+
+		            cefArray->SetValue(strFieldName, cefVal);
+				}
+				else
+				{
+					cefArray->SetValue(strFieldName, CefV8Value::CreateNull());
+				}
             }
 
             return cefArray;
