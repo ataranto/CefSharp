@@ -84,6 +84,9 @@
     </Compile>
     <Compile Include="TestSchemeHandler.cs" />
     <Compile Include="TestSettings.cs" />
+    <Compile Include="TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CefSharp\CefSharp.vcproj">

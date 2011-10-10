@@ -235,4 +235,55 @@ namespace CefSharp
         // TODO: risk of infinite lock
         _browserInitialized->WaitOne();
     }
+
+	void CefFormsWebBrowser::InvokeOnMouseMove(MouseEventArgs^ e)
+	{
+		if (!IsInitialized) return;
+
+		_clientAdapter->GetCefBrowser()->SendMouseMoveEvent(e->X, e->Y, false);
+	}
+
+	void CefFormsWebBrowser::InvokeOnMouseLeave()
+	{
+		if (!IsInitialized) return;
+
+		_clientAdapter->GetCefBrowser()->SendMouseMoveEvent(0, 0, true);
+	}
+
+	void CefFormsWebBrowser::InvokeOnMouseWheel(MouseEventArgs^ e)
+	{
+		if (!IsInitialized) return;
+
+		_clientAdapter->GetCefBrowser()->SendMouseWheelEvent(e->X, e->Y, e->Delta);
+	}
+
+	void CefFormsWebBrowser::InvokeOnMouseDown(MouseEventArgs^ e)
+	{
+		CefBrowser::MouseButtonType mbt;
+		if (e->Button == Windows::Forms::MouseButtons::Right)
+        {
+            mbt = CefBrowser::MouseButtonType::MBT_RIGHT;
+        }
+		else if (e->Button == Windows::Forms::MouseButtons::Left)
+        {
+            mbt = CefBrowser::MouseButtonType::MBT_LEFT;
+        }
+
+        _clientAdapter->GetCefBrowser()->SendMouseClickEvent(e->X, e->Y, mbt, false, 1);
+	}
+
+	void CefFormsWebBrowser::InvokeOnMouseUp(MouseEventArgs^ e)
+	{
+		CefBrowser::MouseButtonType mbt;
+		if (e->Button == Windows::Forms::MouseButtons::Right)
+        {
+            mbt = CefBrowser::MouseButtonType::MBT_RIGHT;
+        }
+		else if (e->Button == Windows::Forms::MouseButtons::Left)
+        {
+            mbt = CefBrowser::MouseButtonType::MBT_LEFT;
+        }
+
+        _clientAdapter->GetCefBrowser()->SendMouseClickEvent(e->X, e->Y, mbt, true, 1);
+	}
 }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using CefSharp;
+using ControlsEx;
 
 namespace CefSharp.Example
 {
@@ -15,6 +16,9 @@ namespace CefSharp.Example
         public Browser()
         {
             InitializeComponent();
+
+            this.SuspendLayout();
+
             Text = "CefSharp";
             _browserControl = new CefFormsWebBrowser(cefSharpHomeUrl, new BrowserSettings());
             _browserControl.Dock = DockStyle.Fill;
@@ -23,7 +27,14 @@ namespace CefSharp.Example
             _browserControl.BeforePopupHandler = this;
             _browserControl.BeforeResourceLoadHandler = this;
             _browserControl.AfterResponseHandler = this;
-            toolStripContainer.ContentPanel.Controls.Add(_browserControl);            
+            toolStripContainer.ContentPanel.Controls.Add(_browserControl);
+
+            TransparentPanel transparentPanel = new TransparentPanel(_browserControl);
+            transparentPanel.Dock = DockStyle.Fill;
+            toolStripContainer.ContentPanel.Controls.Add(transparentPanel);
+            transparentPanel.BringToFront();
+
+            this.ResumeLayout();
         }
 
         private void HandleBrowserPropertyChanged(object sender, PropertyChangedEventArgs e)
