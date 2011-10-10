@@ -110,6 +110,8 @@ namespace CefSharp
 
     void CefFormsWebBrowser::OnHandleCreated(EventArgs^ e)
     {
+		Control::OnHandleCreated(e);
+
         if (DesignMode == false) 
         {
             _clientAdapter = new ClientAdapter(this);
@@ -131,6 +133,8 @@ namespace CefSharp
 
     void CefFormsWebBrowser::OnSizeChanged(EventArgs^ e)
     {
+		Control::OnSizeChanged(e);
+
         if (IsInitialized && !DesignMode)
         {
             HWND hWnd = static_cast<HWND>(Handle.ToPointer());
@@ -146,11 +150,23 @@ namespace CefSharp
 
     void CefFormsWebBrowser::OnGotFocus(EventArgs^ e)
     {
+		Control::OnGotFocus(e);
+
         if (IsInitialized && !DesignMode)
         {
             _clientAdapter->GetCefBrowser()->SetFocus(true);
         }
     }
+
+	void CefFormsWebBrowser::OnLostFocus(EventArgs^ e)
+	{
+		Control::OnLostFocus(e);
+
+        if (IsInitialized && !DesignMode)
+        {
+            _clientAdapter->GetCefBrowser()->SetFocus(false);
+        }
+	}
 
     void CefFormsWebBrowser::SetTitle(String^ title)
     {
@@ -259,6 +275,8 @@ namespace CefSharp
 
 	void CefFormsWebBrowser::InvokeOnMouseDown(MouseEventArgs^ e)
 	{
+		if (!IsInitialized) return;
+
 		CefBrowser::MouseButtonType mbt;
 		if (e->Button == Windows::Forms::MouseButtons::Right)
         {
@@ -274,6 +292,8 @@ namespace CefSharp
 
 	void CefFormsWebBrowser::InvokeOnMouseUp(MouseEventArgs^ e)
 	{
+		if (!IsInitialized) return;
+
 		CefBrowser::MouseButtonType mbt;
 		if (e->Button == Windows::Forms::MouseButtons::Right)
         {

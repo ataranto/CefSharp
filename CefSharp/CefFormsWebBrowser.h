@@ -42,6 +42,7 @@ namespace CefSharp
         virtual void OnHandleCreated(EventArgs^ e) override;
         virtual void OnSizeChanged(EventArgs^ e) override;
         virtual void OnGotFocus(EventArgs^ e) override;
+		virtual void OnLostFocus(EventArgs^ e) override;
 
     private:
         void Construct(String^ address, BrowserSettings^ settings)
