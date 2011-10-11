@@ -306,4 +306,33 @@ namespace CefSharp
 
         _clientAdapter->GetCefBrowser()->SendMouseClickEvent(e->X, e->Y, mbt, true, 1);
 	}
+
+	void CefFormsWebBrowser::InvokeSendKeyEvent(int message, IntPtr wParam, IntPtr lParam)
+	{
+		if (!IsInitialized) return;
+
+		CefBrowser::KeyType type = KT_CHAR;
+		bool sysChar = false, imeChar = false;
+
+		if (message == WM_KEYDOWN || message == WM_SYSKEYDOWN)
+		{
+			type = KT_KEYDOWN;
+		}
+		else if (message == WM_KEYUP || message == WM_SYSKEYUP)
+		{
+			type = KT_KEYUP;
+		}
+
+		if (message == WM_SYSKEYDOWN || message == WM_SYSKEYUP || message == WM_SYSCHAR)
+		{
+			sysChar = true;
+		}
+
+		if (message == WM_IME_CHAR)
+		{
+			imeChar = true;
+		}
+
+		_clientAdapter->GetCefBrowser()->SendKeyEvent(type, wParam.ToInt32(), lParam.ToInt32(), sysChar, imeChar);
+	}
 }

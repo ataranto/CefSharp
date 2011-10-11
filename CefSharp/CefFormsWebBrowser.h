@@ -93,6 +93,7 @@ namespace CefSharp
         void InvokeOnMouseWheel(MouseEventArgs^ e);
         void InvokeOnMouseDown(MouseEventArgs^ e);
         void InvokeOnMouseUp(MouseEventArgs^ e);
+        void InvokeSendKeyEvent(int message, IntPtr wParam, IntPtr lParam);
 
         virtual void SetTitle(String^ title);
         virtual void SetToolTip(String^ text);
