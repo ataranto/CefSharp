@@ -15,6 +15,7 @@ namespace CefSharp.Example
         public Browser()
         {
             InitializeComponent();
+
             Text = "CefSharp";
             _browserControl = new CefFormsWebBrowser(cefSharpHomeUrl, new BrowserSettings());
             _browserControl.Dock = DockStyle.Fill;
@@ -23,7 +24,7 @@ namespace CefSharp.Example
             _browserControl.BeforePopupHandler = this;
             _browserControl.BeforeResourceLoadHandler = this;
             _browserControl.AfterResponseHandler = this;
-            toolStripContainer.ContentPanel.Controls.Add(_browserControl);            
+            toolStripContainer.ContentPanel.Controls.Add(_browserControl);
         }
 
         private void HandleBrowserPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -54,6 +55,7 @@ namespace CefSharp.Example
                     goButton.Text = _browserControl.IsLoading ? "Stop" : "Go";
                     break;
             }
+            
         }
 
         private void HandleGoButtonClick(object sender, EventArgs e)

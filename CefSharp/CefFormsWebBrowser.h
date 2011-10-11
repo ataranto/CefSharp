@@ -42,6 +42,7 @@ namespace CefSharp
         virtual void OnHandleCreated(EventArgs^ e) override;
         virtual void OnSizeChanged(EventArgs^ e) override;
         virtual void OnGotFocus(EventArgs^ e) override;
+		virtual void OnLostFocus(EventArgs^ e) override;
 
     private:
         void Construct(String^ address, BrowserSettings^ settings)
@@ -86,6 +87,13 @@ namespace CefSharp
         void Print();
         String^ RunScript(String^ script, String^ scriptUrl, int startLine);
         String^ RunScript(String^ script, String^ scriptUrl, int startLine, int timeout);
+
+		void InvokeOnMouseMove(MouseEventArgs^ e);
+        void InvokeOnMouseLeave();
+        void InvokeOnMouseWheel(MouseEventArgs^ e);
+        void InvokeOnMouseDown(MouseEventArgs^ e);
+        void InvokeOnMouseUp(MouseEventArgs^ e);
+        void InvokeSendKeyEvent(int message, IntPtr wParam, IntPtr lParam);
 
         virtual void SetTitle(String^ title);
         virtual void SetToolTip(String^ text);
