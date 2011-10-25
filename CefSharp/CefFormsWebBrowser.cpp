@@ -235,4 +235,88 @@ namespace CefSharp
         // TODO: risk of infinite lock
         _browserInitialized->WaitOne();
     }
+
+	void CefFormsWebBrowser::InvokeOnMouseMove(MouseEventArgs^ e)
+	{
+		if (!IsInitialized) return;
+
+		_clientAdapter->GetCefBrowser()->SendMouseMoveEvent(e->X, e->Y, false);
+	}
+
+	void CefFormsWebBrowser::InvokeOnMouseLeave()
+	{
+		if (!IsInitialized) return;
+
+		_clientAdapter->GetCefBrowser()->SendMouseMoveEvent(0, 0, true);
+	}
+
+	void CefFormsWebBrowser::InvokeOnMouseWheel(MouseEventArgs^ e)
+	{
+		if (!IsInitialized) return;
+
+		_clientAdapter->GetCefBrowser()->SendMouseWheelEvent(e->X, e->Y, e->Delta);
+	}
+
+	void CefFormsWebBrowser::InvokeOnMouseDown(MouseEventArgs^ e)
+	{
+		if (!IsInitialized) return;
+
+		CefBrowser::MouseButtonType mbt;
+		if (e->Button == Windows::Forms::MouseButtons::Right)
+		{
+			mbt = CefBrowser::MouseButtonType::MBT_RIGHT;
+		}
+		else if (e->Button == Windows::Forms::MouseButtons::Left)
+		{
+			mbt = CefBrowser::MouseButtonType::MBT_LEFT;
+		}
+
+		_clientAdapter->GetCefBrowser()->SendMouseClickEvent(e->X, e->Y, mbt, false, 1);
+	}
+
+	void CefFormsWebBrowser::InvokeOnMouseUp(MouseEventArgs^ e)
+	{
+		if (!IsInitialized) return;
+
+		CefBrowser::MouseButtonType mbt;
+		if (e->Button == Windows::Forms::MouseButtons::Right)
+		{
+			mbt = CefBrowser::MouseButtonType::MBT_RIGHT;
+		}
+		else if (e->Button == Windows::Forms::MouseButtons::Left)
+		{
+			mbt = CefBrowser::MouseButtonType::MBT_LEFT;
+		}
+
+		_clientAdapter->GetCefBrowser()->SendMouseClickEvent(e->X, e->Y, mbt, true, 1);
+	}
+
+	void CefFormsWebBrowser::InvokeSendKeyEvent(int message, IntPtr wParam, IntPtr lParam)
+	{
+		if (!IsInitialized) return;
+
+		CefBrowser::KeyType type = KT_CHAR;
+		bool sysChar = false, imeChar = false;
+
+		if (message == WM_KEYDOWN || message == WM_SYSKEYDOWN)
+		{
+			type = KT_KEYDOWN;
+		}
+		else if (message == WM_KEYUP || message == WM_SYSKEYUP)
+		{
+			type = KT_KEYUP;
+		}
+
+		if (message == WM_SYSKEYDOWN || message == WM_SYSKEYUP || message == WM_SYSCHAR)
+		{
+			sysChar = true;
+		}
+
+		if (message == WM_IME_CHAR)
+		{
+			imeChar = true;
+		}
+
+		_clientAdapter->GetCefBrowser()->SendKeyEvent(type, wParam.ToInt32(), lParam.ToInt32(), sysChar, imeChar);
+	}
 }
