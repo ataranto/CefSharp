@@ -65,6 +65,20 @@ namespace CefSharp
         _clientAdapter->GetCefBrowser()->GetMainFrame()->Print();
     }
 
+    void CefFormsWebBrowser::ShowDevTools()
+    {
+        WaitForInitialized();
+
+        _clientAdapter->GetCefBrowser()->ShowDevTools();
+    }
+
+    void CefFormsWebBrowser::CloseDevTools()
+    {
+        WaitForInitialized();
+
+        _clientAdapter->GetCefBrowser()->CloseDevTools();
+    }
+
     String^ CefFormsWebBrowser::RunScript(String^ script)
     {
 	    WaitForInitialized();
