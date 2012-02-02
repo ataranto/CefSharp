@@ -7,7 +7,7 @@ using CefSharp;
 
 namespace CefSharp.Example
 {
-    public partial class Browser : Form, IBeforePopup, IBeforeResourceLoad, IAfterResponse
+    public partial class Browser : Form, IBeforePopup, IBeforeResourceLoad, IAfterResponse, IBeforeBrowse
     {
         private readonly CefFormsWebBrowser _browserControl;
         private const string cefSharpHomeUrl = "https://github.com/chillitom/CefSharp";
@@ -20,6 +20,7 @@ namespace CefSharp.Example
             _browserControl.Dock = DockStyle.Fill;
             _browserControl.PropertyChanged += HandleBrowserPropertyChanged;
             _browserControl.ConsoleMessage += HandleConsoleMessage;
+            _browserControl.BeforeBrowseHandler = this;
             _browserControl.BeforePopupHandler = this;
             _browserControl.BeforeResourceLoadHandler = this;
             _browserControl.AfterResponseHandler = this;
@@ -98,6 +99,17 @@ namespace CefSharp.Example
             {
                 _browserControl.Load(urlTextBox.Text);
             }
+        }
+
+        public bool HandleBeforeBrowse(ICefWebBrowser browserControl, IRequest request, NavigationType navigationType, bool isRedirect)
+        {
+            Console.WriteLine("HandleBeforeBrowse: {0}", request.Url);
+
+            if (navigationType == NavigationType.LinkClicked)
+            {
+                
+            }
+            return false;
         }
 
         public bool HandleBeforePopup(string url, ref int x, ref int y, ref int width, ref int height)

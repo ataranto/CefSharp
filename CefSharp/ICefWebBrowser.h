@@ -6,6 +6,7 @@ using namespace System::ComponentModel;
 
 namespace CefSharp
 {
+    interface class IBeforeBrowse;
     interface class IBeforePopup;
     interface class IBeforeResourceLoad;
     interface class IBeforeMenu;
@@ -14,6 +15,7 @@ namespace CefSharp
     public interface class ICefWebBrowser : INotifyPropertyChanged
     {
     public:
+        property IBeforeBrowse^ BeforeBrowseHandler;
         property IBeforePopup^ BeforePopupHandler;
         property IBeforeResourceLoad^ BeforeResourceLoadHandler;
         property IBeforeMenu^ BeforeMenuHandler;

@@ -33,6 +33,7 @@ namespace CefSharp
         String^ _jsResult;
         bool _jsError;
 
+        IBeforeBrowse^ _beforeBrowseHandler;
         IBeforePopup^ _beforePopupHandler;
         IBeforeResourceLoad^ _beforeResourceLoadHandler;
         IBeforeMenu^ _beforeMenuHandler;
@@ -123,6 +124,12 @@ namespace CefSharp
         virtual void SetJsResult(String^ result);
         virtual void SetJsError();
         virtual void RaiseConsoleMessage(String^ message, String^ source, int line);
+
+        virtual property IBeforeBrowse^ BeforeBrowseHandler
+        {
+            IBeforeBrowse^ get() { return _beforeBrowseHandler; }
+            void set(IBeforeBrowse^ handler) { _beforeBrowseHandler = handler; }
+        }
 
         virtual property IBeforePopup^ BeforePopupHandler
         {

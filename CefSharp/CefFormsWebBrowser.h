@@ -28,6 +28,7 @@ namespace CefSharp
 
         BrowserSettings^ _settings;
 
+        IBeforeBrowse^ _beforeBrowseHandler;
         IBeforePopup^ _beforePopupHandler;
         IBeforeResourceLoad^ _beforeResourceLoadHandler;
         IBeforeMenu^ _beforeMenuHandler;
@@ -112,6 +113,12 @@ namespace CefSharp
         property String^ Address
         {
             String^ get() { return _address; }
+        }
+
+        virtual property IBeforeBrowse^ BeforeBrowseHandler
+        {
+            IBeforeBrowse^ get() { return _beforeBrowseHandler; }
+            void set(IBeforeBrowse^ handler) { _beforeBrowseHandler = handler; }
         }
 
         virtual property IBeforePopup^ BeforePopupHandler

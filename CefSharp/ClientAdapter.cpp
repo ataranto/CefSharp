@@ -3,6 +3,7 @@
 #include "BindingHandler.h"
 #include "ClientAdapter.h"
 #include "CefSharp.h"
+#include "IBeforeBrowse.h"
 #include "IBeforePopup.h"
 #include "IBeforeResourceLoad.h"
 #include "IBeforeMenu.h"
@@ -102,6 +103,19 @@ namespace CefSharp
         }
 
         _browserControl->FrameLoadComplete(frame);
+    }
+
+    bool ClientAdapter::OnBeforeBrowse(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, CefRequestHandler::NavType navType, bool isRedirect)
+    {
+        IBeforeBrowse^ handler = _browserControl->BeforeBrowseHandler;
+        if (handler != nullptr)
+        {
+            CefRequestWrapper^ requestWrapper = gcnew CefRequestWrapper(request);
+            NavigationType navigationType = (NavigationType)navType;
+
+            return handler->HandleBeforeBrowse(_browserControl, /*frame,*/ requestWrapper, navigationType, isRedirect);
+        }
+        return false;
     }
 
     bool ClientAdapter::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefRequest> request, CefString& redirectUrl, CefRefPtr<CefStreamReader>& resourceStream, CefRefPtr<CefResponse> response, int loadFlags)
