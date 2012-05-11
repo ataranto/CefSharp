@@ -118,8 +118,23 @@ namespace CefSharp
     bool ClientAdapter::OnLoadError(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, ErrorCode errorCode, const CefString& failedUrl, CefString& errorText)
     {
         IAfterLoadError^ handler = _browserControl->AfterLoadErrorHandler;
-        return handler != nullptr &&
-            handler->HandleLoadError();
+        if (handler == nullptr)
+        {
+            return false;
+        }
+
+        String^ errorString = nullptr;
+        handler->HandleLoadError(_browserControl, errorCode, toClr(failedUrl), errorString);
+
+        if (errorString == nullptr)
+        {
+            return false;
+        }
+        else
+        {
+            errorText = toNative(errorString);
+            return true;
+        }
     }
 
     bool ClientAdapter::OnBeforeBrowse(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, NavType navType, bool isRedirect)
@@ -171,14 +186,29 @@ namespace CefSharp
     void ClientAdapter::OnResourceResponse(CefRefPtr<CefBrowser> browser, const CefString& url, CefRefPtr<CefResponse> response, CefRefPtr<CefContentFilter>& filter)
     {
         IAfterResponse^ handler = _browserControl->AfterResponseHandler;
-        if (handler != nullptr)
+        if (handler == nullptr)
         {
-            String^ cookie = toClr(response->GetHeader("Set-Cookie"));
-            if (!String::IsNullOrEmpty(cookie))
-            {
-                handler->HandleSetCookie(cookie);
-            }
+            return;
         }
+
+        IList<Header^>^ headers = gcnew List<Header^>();
+        CefResponse::HeaderMap hm;
+        response->GetHeaderMap(hm);
+        for (CefResponse::HeaderMap::iterator it = hm.begin(); it != hm.end(); ++it)
+        {
+            Header^ header = gcnew Header();
+            header->name = toClr(it->first);
+            header->value = toClr(it->second);
+            headers->Add(header);
+        }
+
+        handler->HandleResponse(
+            _browserControl,
+            toClr(url),
+            response->GetStatus(),
+            toClr(response->GetStatusText()),
+            toClr(response->GetMimeType()),
+            headers);
     }
 
     void ClientAdapter::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
