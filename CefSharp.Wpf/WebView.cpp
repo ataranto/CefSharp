@@ -42,6 +42,8 @@ namespace Wpf
         _timer->Interval = TimeSpan::FromSeconds(0.5);
         _timer->Tick +=
             gcnew EventHandler(this, &WebView::Timer_Tick);
+		this->Loaded +=	gcnew RoutedEventHandler(this, &WebView::OnLoaded);	
+		this->Unloaded += gcnew RoutedEventHandler(this, &WebView::OnUnloaded);	
     }
 
     bool WebView::TryGetCefBrowser(CefRefPtr<CefBrowser>& browser)
@@ -169,9 +171,9 @@ namespace Wpf
             _popupImage->Source = nullptr;
             GC::Collect(1);
 
-            int stride = _popupWidth * PixelFormats::Bgr32.BitsPerPixel / 8;
+            int stride = _popupImageWidth * PixelFormats::Bgr32.BitsPerPixel / 8;
             bitmap = (InteropBitmap^)Interop::Imaging::CreateBitmapSourceFromMemorySection(
-                (IntPtr)_popupFileMappingHandle, _popupWidth, _popupHeight, PixelFormats::Bgr32, stride, 0);
+                (IntPtr)_popupFileMappingHandle, _popupImageWidth, _popupImageHeight, PixelFormats::Bgr32, stride, 0);
             _popupImage->Source = bitmap;
             _popupIbitmap = bitmap;
         }
@@ -602,11 +604,7 @@ namespace Wpf
 
         _clientAdapter = new RenderClientAdapter(this);
 
-        _source = (HwndSource^)PresentationSource::FromVisual(this);
-        _matrix = _source->CompositionTarget->TransformToDevice;
-
-        _hook = gcnew Interop::HwndSourceHook(this, &WebView::SourceHook);
-        _source->AddHook(_hook);
+        EnsureSourceAndHook();
 
         HWND hwnd = static_cast<HWND>(_source->Handle.ToPointer());
         CefWindowInfo window;
@@ -687,7 +685,7 @@ namespace Wpf
 
     void WebView::SetPopupBuffer(int width, int height, const void* buffer)
     {
-        int currentWidth = _popupWidth, currentHeight = _popupHeight;
+        int currentWidth = _popupImageWidth, currentHeight = _popupImageHeight;
         HANDLE fileMappingHandle = _popupFileMappingHandle, backBufferHandle = _popupBackBufferHandle;
         InteropBitmap^ ibitmap = _popupIbitmap;
 
@@ -698,8 +696,8 @@ namespace Wpf
         _popupFileMappingHandle = fileMappingHandle;
         _popupBackBufferHandle = backBufferHandle;
 
-        _popupWidth = currentWidth;
-        _popupHeight = currentHeight;
+        _popupImageWidth = currentWidth;
+        _popupImageHeight = currentHeight;
     }
 
     void WebView::SetBuffer(int &currentWidth, int& currentHeight, int width, int height,
@@ -813,6 +811,32 @@ namespace Wpf
         HidePopup();
     }
 
+	void WebView::OnLoaded(Object^ sender, RoutedEventArgs^ e)
+    {
+		EnsureSourceAndHook();
+    }
+
+    void WebView::EnsureSourceAndHook()
+    {
+		if (_source == nullptr)
+        {
+			_source = (HwndSource^)PresentationSource::FromVisual(this);
+			_matrix = _source->CompositionTarget->TransformToDevice;
+
+			_hook = gcnew Interop::HwndSourceHook(this, &WebView::SourceHook);
+			_source->AddHook(_hook);
+		}
+    }
+
+    void WebView::OnUnloaded(Object^ sender, RoutedEventArgs^ e)
+    {  
+		if (_source && _hook)
+        {
+            _source->RemoveHook(_hook);
+			_source = nullptr;
+			_hook = nullptr;
+        }
+    }
     void WebView::HidePopup()
     {
         CefRefPtr<CefBrowser> browser;
