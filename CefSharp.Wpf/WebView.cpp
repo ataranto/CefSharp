@@ -171,9 +171,9 @@ namespace Wpf
             _popupImage->Source = nullptr;
             GC::Collect(1);
 
-            int stride = _popupWidth * PixelFormats::Bgr32.BitsPerPixel / 8;
+            int stride = _popupImageWidth * PixelFormats::Bgr32.BitsPerPixel / 8;
             bitmap = (InteropBitmap^)Interop::Imaging::CreateBitmapSourceFromMemorySection(
-                (IntPtr)_popupFileMappingHandle, _popupWidth, _popupHeight, PixelFormats::Bgr32, stride, 0);
+                (IntPtr)_popupFileMappingHandle, _popupImageWidth, _popupImageHeight, PixelFormats::Bgr32, stride, 0);
             _popupImage->Source = bitmap;
             _popupIbitmap = bitmap;
         }
@@ -685,7 +685,7 @@ namespace Wpf
 
     void WebView::SetPopupBuffer(int width, int height, const void* buffer)
     {
-        int currentWidth = _popupWidth, currentHeight = _popupHeight;
+        int currentWidth = _popupImageWidth, currentHeight = _popupImageHeight;
         HANDLE fileMappingHandle = _popupFileMappingHandle, backBufferHandle = _popupBackBufferHandle;
         InteropBitmap^ ibitmap = _popupIbitmap;
 
@@ -696,8 +696,8 @@ namespace Wpf
         _popupFileMappingHandle = fileMappingHandle;
         _popupBackBufferHandle = backBufferHandle;
 
-        _popupWidth = currentWidth;
-        _popupHeight = currentHeight;
+        _popupImageWidth = currentWidth;
+        _popupImageHeight = currentHeight;
     }
 
     void WebView::SetBuffer(int &currentWidth, int& currentHeight, int width, int height,
