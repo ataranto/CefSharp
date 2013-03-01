@@ -13,8 +13,12 @@ namespace CefSharp
         _redirectUrl = url;
         _action = ResponseAction::Redirect;
     }
-
+	
     void RequestResponse::RespondWith(Stream^ stream, String^ mimeType)
+    {
+		RespondWith(stream, mimeType, "OK", 200, nullptr);
+	}
+    void RequestResponse::RespondWith(Stream^ stream, String^ mimeType, String^ statusText, int statusCode, IDictionary<String^, String^>^ responseHeaders)
     {
         if(String::IsNullOrEmpty(mimeType))
         {
@@ -28,6 +32,10 @@ namespace CefSharp
 
         _responseStream = stream;
         _mimeType = mimeType;
+		_statusText = statusText;
+		_statusCode = statusCode;
+		_responseHeaders = responseHeaders;
+
         _action = ResponseAction::Respond;
     }
 }
