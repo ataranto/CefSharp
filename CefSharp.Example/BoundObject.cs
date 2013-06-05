@@ -4,6 +4,17 @@ namespace CefSharp.Example
 {
     class BoundObject
     {
+        public int MyProperty { get; set; }
+        public string MyReadOnlyProperty { get; internal set; }
+        public Type MyUnconvertibleProperty { get; set; }
+
+        public BoundObject()
+        {
+            MyProperty = 42;
+            MyReadOnlyProperty = "I'm immutable!";
+            MyUnconvertibleProperty = GetType();
+        }
+
         public string Repeat(string str, int n)
         {
             string result = String.Empty;
