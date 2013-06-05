@@ -1,6 +1,6 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 
-#include "BindingHandler.h"
+#include "Internals/JavascriptBinding/BindingHandler.h"
 #include "ClientAdapter.h"
 #include "CefSharp.h"
 #include "StreamAdapter.h"
@@ -13,6 +13,7 @@
 #include "IKeyboardHandler.h"
 
 using namespace std;
+using namespace CefSharp::Internals::JavascriptBinding;
 
 namespace CefSharp
 {

@@ -1,13 +1,8 @@
-﻿using System;
-using System.ComponentModel;
+﻿using CefSharp.Example;
+using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Threading;
-using CefSharp.Example;
 
 namespace CefSharp.Wpf.Example
 {
@@ -44,7 +39,7 @@ namespace CefSharp.Wpf.Example
         public event EventHandler BackActivated;
         public event EventHandler ForwardActivated;
 
-        private IDictionary<object, EventHandler> handlers;
+        private readonly IDictionary<object, EventHandler> handlers;
 
         public MainWindow()
         {

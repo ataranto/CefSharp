@@ -6,14 +6,18 @@
 *.swp
 *.dll
 *.exe
+*.exe.config
 *.manifest
-
+*.opensdf
+*.sdf
+*.ipch
+*.exe.config
 *.ReSharper
 _ReSharper*
 
 obj/
 bin/
-Debug/
+/Debug/
 CefSharp/app.aps
 TestResult.xml
 debug.log
