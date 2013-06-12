@@ -344,6 +344,7 @@ namespace Wpf
             browser->SendMouseMoveEvent(0, 0, true);
         }
 
+        _timer->Stop();
         _toolTip->IsOpen = false;
     }
 
