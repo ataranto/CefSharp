@@ -241,12 +241,6 @@ namespace Wpf
             }
         }
 
-        window = Window::GetWindow(this);
-        if (window != nullptr)
-        {
-            window->LocationChanged += _handler;
-            window->Deactivated += _handler;
-        }
 
         ContentControl::OnVisualParentChanged(oldParent);
     }
@@ -814,6 +808,16 @@ namespace Wpf
     void WebView::OnLoaded(Object^ sender, RoutedEventArgs^ e)
     {
         AddSourceHook();
+
+        EventHandler^ _handler = gcnew EventHandler(this, &WebView::OnHidePopup);
+        Window^ window;
+
+        window = Window::GetWindow(this);
+        if (window != nullptr)
+        {
+            window->LocationChanged += _handler;
+            window->Deactivated += _handler;
+        }
     }
 
     void WebView::OnUnloaded(Object^ sender, RoutedEventArgs^ e)
