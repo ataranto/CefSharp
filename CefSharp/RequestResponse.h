@@ -18,6 +18,7 @@ namespace CefSharp
         void Redirect(String^ url);
         /// respond with data from Stream
         void RespondWith(Stream^ stream, String^ mimeType);
+        void RespondWith(Stream^ stream, String^ mimeType, String^ statusText, int statusCode);
     };
 
     enum class ResponseAction
@@ -57,6 +58,7 @@ namespace CefSharp
         virtual property IRequest^ Request { IRequest^ get() { return _request; } }
         virtual void Redirect(String^ url);
         virtual void RespondWith(Stream^ stream, String^ mimeType);
+        virtual void RespondWith(Stream^ stream, String^ mimeType, String^ statusText, int statusCode);
         virtual void RespondWith(Stream^ stream, String^ mimeType, String^ statusText, int statusCode, IDictionary<String^, String^>^ responseHeaders);
     };
 
