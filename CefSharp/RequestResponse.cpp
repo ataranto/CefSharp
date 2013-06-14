@@ -19,6 +19,11 @@ namespace CefSharp
         RespondWith(stream, mimeType, "OK", 200, nullptr);
     }
 
+    void RequestResponse::RespondWith(Stream^ stream, String^ mimeType, String^ statusText, int statusCode)
+    {
+        RespondWith(stream, mimeType, statusText, statusCode, nullptr);
+    }
+
     void RequestResponse::RespondWith(Stream^ stream, String^ mimeType, String^ statusText, int statusCode, IDictionary<String^, String^>^ responseHeaders)
     {
         if (String::IsNullOrEmpty(mimeType))
