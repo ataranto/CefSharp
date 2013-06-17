@@ -7,13 +7,16 @@
 *.dll
 *.exe
 *.manifest
-
+*.opensdf
+*.sdf
+*.ipch
 *.ReSharper
 _ReSharper*
 
 obj/
 bin/
-Debug/
+/Debug/
 CefSharp/app.aps
 TestResult.xml
 debug.log
+CefSharp.Wpf.Example.exe.config

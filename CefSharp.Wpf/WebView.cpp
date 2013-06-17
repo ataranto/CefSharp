@@ -672,9 +672,9 @@ namespace Wpf
         _popupImage->VerticalAlignment = ::VerticalAlignment::Top;
     }
 
-    void WebView::SetCursor(CefCursorHandle cursor)
+    void WebView::SetCursor(IntPtr cursor)
     {
-        SafeFileHandle^ handle = gcnew SafeFileHandle((IntPtr)cursor, false);
+        SafeFileHandle^ handle = gcnew SafeFileHandle(cursor, false);
         Dispatcher->BeginInvoke(DispatcherPriority::Render,
             gcnew Action<SafeFileHandle^>(this, &WebView::SetCursor), handle);
     }
@@ -778,12 +778,14 @@ namespace Wpf
         }
     }
 
-    void WebView::SetPopupSizeAndPosition(const CefRect& rect)
+    void WebView::SetPopupSizeAndPosition(const void* rect)
     {
-        _popupX = rect.x;
-        _popupY = rect.y;
-        _popupWidth = rect.width;
-        _popupHeight = rect.height;
+		auto cefRect = (const CefRect&) rect;
+
+        _popupX = cefRect.x;
+        _popupY = cefRect.y;
+        _popupWidth = cefRect.width;
+        _popupHeight = cefRect.height;
 
         if(!Dispatcher->HasShutdownStarted) {
             Dispatcher->BeginInvoke(DispatcherPriority::Render, _resizePopupDelegate);

@@ -1,13 +1,8 @@
-﻿using System;
-using System.ComponentModel;
+﻿using CefSharp.Example;
+using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Threading;
-using CefSharp.Example;
 
 namespace CefSharp.Wpf.Example
 {
@@ -44,7 +39,7 @@ namespace CefSharp.Wpf.Example
         public event EventHandler BackActivated;
         public event EventHandler ForwardActivated;
 
-        private IDictionary<object, EventHandler> handlers;
+        private readonly IDictionary<object, EventHandler> handlers;
 
         public MainWindow()
         {
@@ -54,37 +49,37 @@ namespace CefSharp.Wpf.Example
                 invoke => Dispatcher.BeginInvoke(invoke));
 
             handlers = new Dictionary<object, EventHandler>
-            {
-                // file
-                { showDevToolsMenuItem, ShowDevToolsActivated},
-                { closeDevToolsMenuItem, CloseDevToolsActivated},
-                { exitMenuItem, ExitActivated },
+                    {
+                        // file
+                        { showDevToolsMenuItem, ShowDevToolsActivated},
+                        { closeDevToolsMenuItem, CloseDevToolsActivated},
+                        { exitMenuItem, ExitActivated },
 
-                // edit
-                { undoMenuItem, UndoActivated },
-                { redoMenuItem, RedoActivated },
-                { cutMenuItem, CutActivated },
-                { copyMenuItem, CopyActivated },
-                { pasteMenuItem, PasteActivated },
-                { deleteMenuItem, DeleteActivated },
-                { selectAllMenuItem, SelectAllActivated },
+                        // edit
+                        { undoMenuItem, UndoActivated },
+                        { redoMenuItem, RedoActivated },
+                        { cutMenuItem, CutActivated },
+                        { copyMenuItem, CopyActivated },
+                        { pasteMenuItem, PasteActivated },
+                        { deleteMenuItem, DeleteActivated },
+                        { selectAllMenuItem, SelectAllActivated },
 
-                // test
-                { testResourceLoadMenuItem, TestResourceLoadActivated },
-                { testSchemeLoadMenuItem, TestSchemeLoadActivated },
-                { testExecuteScriptMenuItem, TestExecuteScriptActivated },
-                { testEvaluateScriptMenuItem, TestEvaluateScriptActivated },
-                { testBindMenuItem, TestBindActivated },
-                { testConsoleMessageMenuItem, TestConsoleMessageActivated },
-                { testTooltipMenuItem, TestTooltipActivated },
-                { testPopupMenuItem, TestPopupActivated },
-                { testLoadStringMenuItem, TestLoadStringActivated },
-                { testCookieVisitorMenuItem, TestCookieVisitorActivated },
+                        // test
+                        { testResourceLoadMenuItem, TestResourceLoadActivated },
+                        { testSchemeLoadMenuItem, TestSchemeLoadActivated },
+                        { testExecuteScriptMenuItem, TestExecuteScriptActivated },
+                        { testEvaluateScriptMenuItem, TestEvaluateScriptActivated },
+                        { testBindMenuItem, TestBindActivated },
+                        { testConsoleMessageMenuItem, TestConsoleMessageActivated },
+                        { testTooltipMenuItem, TestTooltipActivated },
+                        { testPopupMenuItem, TestPopupActivated },
+                        { testLoadStringMenuItem, TestLoadStringActivated },
+                        { testCookieVisitorMenuItem, TestCookieVisitorActivated },
 
-                // navigation
-                { backButton, BackActivated },
-                { forwardButton, ForwardActivated },
-            };
+                        // navigation
+                        { backButton, BackActivated },
+                        { forwardButton, ForwardActivated },
+                    };
         }
 
         public void SetTitle(string title)
