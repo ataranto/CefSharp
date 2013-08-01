@@ -1,3 +1,29 @@
+WIP
+###### 1.25.2-perlun.1
+
+- Add support for parameters of type 'Object' accepting any type of value. [@EMonk72]
+- Fix object binding to allow multiple methods with same name. [@EMonk72]
+- Reimplemented Javascript-to-.NET binding to support a range of options including C#-style param arrays and optional parameters
+  with default values. [@EMonk72]
+- Added support for accessing the body of the request in a custom scheme handler. [@kpko]
+- Added support for overriding the window.alert(), window.confirm() and window.prompt() methods by using the new IJsDialogHandler
+  interface + the new IWebBrowser.JsDialogHandler property, which is presumed to be your own implementation of this interface.
+  [@KristinaKoeva]
+- Fixed a null pointer exception that occurs when WebView is loaded. [@joaompneves]
+- Fixed crash on window deactivate. [@joaompneves]
+
+June 17, 2013, Chromium 25.0.1364.1123
+###### 1.25.2-perlun.0
+
+- Updated to compile correctly with VS2010 in Release mode. [@plundberg]
+
+###### 1.25.1-perlun.0
+June 7, 2013, Chromium 25.0.1364.1123
+
+- Upgraded the project to be compiled with VS2010 SP1 and/or VS2012, instead of VS2008. This means that you will now only be able to consume this version of CefSharp from .NET 4.0 code (3.5 and 2.0 is no longer supported). [@plundberg, @mwisnicki]
+- Added support for exposing CLR properties to Javascript code. [@plundberg]
+- Breaking change: Changed CLR methods and properties to use camelCase (rather than just exposing them as-is, which was the previous case), to make them act more like regular Javascript methods and properties. [@plundberg]
+
 ###### 1.25.0
 March 11, 2013, Chromium 25.0.1364.68
 

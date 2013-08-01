@@ -4,6 +4,17 @@ namespace CefSharp.Example
 {
     class BoundObject
     {
+        public int MyProperty { get; set; }
+        public string MyReadOnlyProperty { get; internal set; }
+        public Type MyUnconvertibleProperty { get; set; }
+
+        public BoundObject()
+        {
+            MyProperty = 42;
+            MyReadOnlyProperty = "I'm immutable!";
+            MyUnconvertibleProperty = GetType();
+        }
+
         public string Repeat(string str, int n)
         {
             string result = String.Empty;
@@ -161,6 +172,17 @@ namespace CefSharp.Example
         public String EchoString(String arg0)
         {
             return arg0;
+        }
+
+        // This will currently not work, as it causes a collision w/ the EchoString() method.
+        //public String echoString(String arg)
+        //{
+        //    return "Lowercase echo: " + arg;
+        //}
+
+        public String lowercaseMethod()
+        {
+            return "lowercase";
         }
     }
 }
