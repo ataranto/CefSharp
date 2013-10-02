@@ -796,6 +796,8 @@ namespace Wpf
     void WebView::OnLoaded(Object^ sender, RoutedEventArgs^ e)
     {
         AddSourceHook();
+
+        _unloaded = false;
     }
 
     void WebView::OnUnloaded(Object^ sender, RoutedEventArgs^ e)
