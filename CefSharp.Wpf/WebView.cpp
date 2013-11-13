@@ -15,6 +15,7 @@ namespace Wpf
             throw gcnew InvalidOperationException("CEF::Initialize() failed");
         }
 
+		_disposed = false;
         Focusable = true;
         FocusVisualStyle = nullptr;
         IsTabStop = true;
@@ -59,7 +60,7 @@ namespace Wpf
 
     bool WebView::TryGetCefBrowser(CefRefPtr<CefBrowser>& browser)
     {
-        if (_browserCore->IsBrowserInitialized && !_unloaded)
+        if (!_disposed && _browserCore->IsBrowserInitialized)
         {
             browser = _clientAdapter->GetCefBrowser();
             return browser != nullptr;
@@ -745,8 +746,6 @@ namespace Wpf
     void WebView::OnLoaded(Object^ sender, RoutedEventArgs^ e)
     {
         AddSourceHook();
-
-        _unloaded = false;
     }
 
     void WebView::OnUnloaded(Object^ sender, RoutedEventArgs^ e)
@@ -759,8 +758,6 @@ namespace Wpf
         }
 
 		RegisterWindowHandlers(); // clear handlers
-
-		_unloaded = true;
     }
 
     void WebView::OnPopupMouseMove(Object^ sender, MouseEventArgs^ e)

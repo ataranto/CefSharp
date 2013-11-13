@@ -57,7 +57,7 @@ namespace Wpf
 
 		Window^ _currentWindow;
 
-		bool _unloaded;
+		bool _disposed;
 
         void Initialize(String^ address, BrowserSettings^ settings);
 		CefRefPtr<CefBrowser> GetCefBrowser();
@@ -150,6 +150,7 @@ namespace Wpf
             {
                 browser->CloseBrowser();
             }
+			_disposed = true;
         }
 
         virtual property bool IsBrowserInitialized
