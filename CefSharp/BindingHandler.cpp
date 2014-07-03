@@ -132,6 +132,12 @@ namespace CefSharp
         CefString& exception = *_exception;
 
         CefRefPtr<BindingData> bindingData = static_cast<BindingData*>(object->GetUserData().get());
+        if (bindingData == nullptr)
+        {
+            exception = "Illegal invocation";
+            return true;
+        }
+
         Object^ self = bindingData->Get();
         if(self == nullptr) 
         {
