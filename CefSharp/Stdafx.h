@@ -6,8 +6,8 @@
   #define DECL __declspec(dllimport)
 #endif
 
-#include <vcclr.h>
-#include <msclr/all.h>
+#include "vcclr_local.h"
+#include <msclr\appdomain.h>
 #include "include/cef_base.h"
 #include "MCefRefPtr.h"
 #include "StringUtil.h"

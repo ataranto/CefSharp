@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #pragma once
 
 #include "BrowserCore.h"
@@ -15,6 +15,7 @@ namespace CefSharp
     interface class IRequestHandler;
     interface class IMenuHandler;
     interface class IKeyboardHandler;
+    interface class IJsDialogHandler;
 
     public interface class IWebBrowser : IDisposable, INotifyPropertyChanged
     {
@@ -38,6 +39,7 @@ namespace CefSharp
         property IRequestHandler^ RequestHandler;
         property IMenuHandler^ MenuHandler;
         property IKeyboardHandler^ KeyboardHandler;
+        property IJsDialogHandler^ JsDialogHandler;
 
         void OnInitialized();
 

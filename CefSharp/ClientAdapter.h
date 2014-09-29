@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #pragma once
 
 #include "include/cef_client.h"
@@ -18,8 +18,8 @@ namespace CefSharp
                           public CefMenuHandler,
                           public CefFocusHandler,
                           public CefKeyboardHandler,
+                          public CefJSDialogHandler,
                           public AppDomainSafeCefBase
-
     {
 
     private:
@@ -68,6 +68,7 @@ namespace CefSharp
         virtual CefRefPtr<CefMenuHandler> GetMenuHandler() OVERRIDE { return this; }
         virtual CefRefPtr<CefFocusHandler> GetFocusHandler() OVERRIDE { return this; }
         virtual CefRefPtr<CefKeyboardHandler> GetKeyboardHandler() OVERRIDE { return this; }
+        virtual CefRefPtr<CefJSDialogHandler> GetJSDialogHandler() OVERRIDE { return this; }
 
         // CefLifeSpanHandler
         virtual DECL bool OnBeforePopup(CefRefPtr<CefBrowser> parentBrowser, const CefPopupFeatures& popupFeatures, CefWindowInfo& windowInfo, const CefString& url, CefRefPtr<CefClient>& client, CefBrowserSettings& settings) OVERRIDE;
@@ -105,6 +106,11 @@ namespace CefSharp
 
         // CefKeyboardHandler
         virtual DECL bool OnKeyEvent(CefRefPtr<CefBrowser> browser, KeyEventType type, int code, int modifiers, bool isSystemKey, bool isAfterJavaScript) OVERRIDE;
+
+        // CefJSDialogHandler
+        virtual DECL bool OnJSAlert(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, const CefString& message) OVERRIDE;
+        virtual DECL bool OnJSConfirm(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, const CefString& message, bool& retval) OVERRIDE;
+        virtual DECL bool OnJSPrompt(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, const CefString& message, const CefString& defaultValue, bool& retval,  CefString& result) OVERRIDE;
 
         IMPLEMENT_LOCKING(ClientAdapter);
         IMPLEMENT_SAFE_REFCOUNTING(ClientAdapter);

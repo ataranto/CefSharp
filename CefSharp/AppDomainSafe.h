@@ -1,6 +1,6 @@
-#include "stdafx.h"
-#pragma once
+#include "Stdafx.h"
 
+#pragma once
 #include "include/cef_client.h"
 
 using namespace System;

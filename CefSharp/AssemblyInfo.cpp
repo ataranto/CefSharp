@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 
 using namespace System;
 using namespace System::Reflection;
@@ -7,11 +7,11 @@ using namespace System::Runtime::InteropServices;
 using namespace System::Security::Permissions;
 
 [assembly:AssemblyTitle("CefSharp")];
-[assembly:AssemblyCompany("Anthony Taranto")];
+[assembly:AssemblyCompany("The CefSharp Project")];
 [assembly:AssemblyProduct("CefSharp")];
-[assembly:AssemblyCopyright("Copyright (c) Anthony Taranto 2013")];
+[assembly:AssemblyCopyright("Copyright (c) The CefSharp Project 2013")];
 
-[assembly:AssemblyVersion("1.25.0.*")];
+[assembly:AssemblyVersion("1.25.7.0")];
 [assembly:ComVisible(false)];
 [assembly:CLSCompliant(true)];
 [assembly:SecurityPermission(SecurityAction::RequestMinimum, UnmanagedCode = true)];

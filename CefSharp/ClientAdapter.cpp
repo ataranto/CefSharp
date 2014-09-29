@@ -1,6 +1,6 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 
-#include "BindingHandler.h"
+#include "Internals/JavascriptBinding/BindingHandler.h"
 #include "ClientAdapter.h"
 #include "CefSharp.h"
 #include "StreamAdapter.h"
@@ -11,8 +11,10 @@
 #include "IRequestHandler.h"
 #include "IMenuHandler.h"
 #include "IKeyboardHandler.h"
+#include "IJsDialogHandler.h"
 
 using namespace std;
+using namespace CefSharp::Internals::JavascriptBinding;
 
 namespace CefSharp
 {
@@ -524,5 +526,51 @@ namespace CefSharp
         } else {
             _OnTakeFocus(this, next);
         }
+    }
+
+    bool ClientAdapter::OnJSAlert(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, const CefString& message)
+    {
+        IJsDialogHandler^ handler = _browserControl->JsDialogHandler;
+        if (handler == nullptr)
+        {
+            return false;
+        }
+
+        bool handled = handler->OnJSAlert(_browserControl, toClr(frame->GetURL()), toClr(message));
+
+        return handled;
+    }
+
+    bool ClientAdapter::OnJSConfirm(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, const CefString& message, bool& retval)
+    {
+        IJsDialogHandler^ handler = _browserControl->JsDialogHandler;
+        if (handler == nullptr)
+        {
+            return false;
+        }
+
+        bool handled = handler->OnJSConfirm(_browserControl, toClr(frame->GetURL()), toClr(message), retval);
+
+        return handled;
+    }
+
+    bool ClientAdapter::OnJSPrompt(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, const CefString& message, const CefString& defaultValue, bool& retval, CefString& result)
+    {
+        IJsDialogHandler^ handler = _browserControl->JsDialogHandler;
+        if (handler == nullptr)
+        {
+            return false;
+        }
+
+        String^ resultString = nullptr;
+
+        bool handled = handler->OnJSPrompt(_browserControl, toClr(frame->GetURL()), toClr(message), toClr(defaultValue), retval, resultString);
+
+        if(resultString != nullptr)
+        {
+            result = toNative(resultString);
+        }
+
+        return handled;
     }
 }

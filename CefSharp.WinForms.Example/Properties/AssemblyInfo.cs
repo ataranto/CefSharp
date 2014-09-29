@@ -2,9 +2,9 @@
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("CefSharp.WinForms.Example")]
-[assembly: AssemblyCompany("Anthony Taranto")]
+[assembly: AssemblyCompany("The CefSharp Project")]
 [assembly: AssemblyProduct("CefSharp")]
-[assembly: AssemblyCopyright("Copyright © Anthony Taranto 2013")]
+[assembly: AssemblyCopyright("Copyright © The CefSharp Project 2013")]
 
-[assembly: AssemblyVersion("1.25.0.*")]
+[assembly: AssemblyVersion("1.25.7.0")]
 [assembly: ComVisible(false)]

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #include "IRenderWebBrowser.h"
 #include "RenderClientAdapter.h"
@@ -71,7 +71,7 @@ namespace CefSharp
 
     void RenderClientAdapter::_SetCursor(RenderClientAdapter* const _this, CefCursorHandle cursor)
     {
-        _this->_renderBrowserControl->SetCursor(cursor);
+        _this->_renderBrowserControl->SetCursor((IntPtr) cursor);
     }
 
     void RenderClientAdapter::OnCursorChange(CefRefPtr<CefBrowser> browser, CefCursorHandle cursor)
@@ -81,5 +81,23 @@ namespace CefSharp
         } else {
             _SetCursor(this, cursor);
         }
+    }
+
+    bool RenderClientAdapter::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
+    {
+        // The simulated screen and view rectangle are the same. This is necessary for popup menus to be located and sized inside
+        // the view.
+        int width, height;
+        browser->GetSize(PET_VIEW, width, height);
+
+        rect.x = rect.y = 0;
+        rect.width = width;
+        rect.height = height;
+        return true;
+    }
+
+    bool RenderClientAdapter::GetScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
+    {
+        return GetViewRect(browser, rect);
     }
 }

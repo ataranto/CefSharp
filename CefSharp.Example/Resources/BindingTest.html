@@ -5,9 +5,9 @@
 	</head>
 	<body>
 	    <p>
-	    Result of calling bound.Repeat("hi ", 5) =
+	    Result of calling bound.repeat("hi ", 5) =
 	    <script type="text/javascript">
-	        var result = bound.Repeat("hi ", 5);
+	        var result = bound.repeat("hi ", 5);
 	        document.write('"' + result + '"');
 	        if(result == "hi hi hi hi hi ")
 	        {
@@ -23,7 +23,20 @@
         Methods on bound object 'bound':<br />
         <ul>
             <script type="text/javascript">
-                for(var name in bound) {
+                for (var name in bound)
+                {
+                    if (bound[name].constructor.name != 'Function') continue;
+                    document.write("<li>" + name + "</li>");
+                }
+            </script>
+        </ul>
+
+        Properties in bound object 'bound':<br />
+        <ul>
+            <script type="text/javascript">
+                for (var name in bound)
+                {
+                    if (bound[name].constructor.name == 'Function') continue;
                     document.write("<li>" + name + "</li>");
                 }
             </script>
