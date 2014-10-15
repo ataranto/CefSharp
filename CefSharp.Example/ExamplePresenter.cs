@@ -18,12 +18,12 @@ namespace CefSharp.Example
             }
         }
 
-        private const string home_url = "http://github.com/ataranto/CefSharp";
+        private const string home_url = "http://github.com/cefsharp/CefSharp";
         private const string resource_url = "http://test/resource/load";
         private const string scheme_url = "test://test/SchemeTest.html";
         private const string bind_url = "test://test/BindingTest.html";
         private const string tooltip_url = "test://test/TooltipTest.html";
-        private const string popup_url = "test:/test/PopupTest.html";
+        private const string popup_url = "test://test/PopupTest.html";
 
         private int color_index = 0;
         private readonly string[] colors =

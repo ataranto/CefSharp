@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 
 #include "CookieVisitor.h"
 
@@ -19,7 +19,7 @@ namespace CefSharp
             cookie->Expires = DateTime(cefCookie.expires.year,
                 cefCookie.expires.month, cefCookie.expires.day_of_month);
         }
-        catch (Exception^ ex)
+        catch (Exception^)
         {
 
         }

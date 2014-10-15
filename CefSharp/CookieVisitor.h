@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #pragma once
 
 #include "include/cef_cookie.h"
@@ -6,7 +6,7 @@
 
 namespace CefSharp
 {
-    public class CookieVisitor : public CefCookieVisitor
+    public class CookieVisitor : public CefCookieVisitor, public AppDomainSafeCefBase
     {
     private:
         gcroot<ICookieVisitor^> _visitor;
@@ -19,6 +19,6 @@ namespace CefSharp
 
         virtual bool Visit(const CefCookie& cookie, int count, int total, bool& deleteCookie) OVERRIDE;
 
-        IMPLEMENT_REFCOUNTING(CookieVisitor);
+        IMPLEMENT_SAFE_REFCOUNTING(CookieVisitor);
     };
 }

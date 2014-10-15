@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>CefSharp.Wpf</id>
+    <version>$version$</version>
+    <authors>CefSharp community</authors>
+    <owners>CefSharp community</owners>
+    <projectUrl>https://github.com/perlun/cefsharp</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The CefSharp Chromium-based browser component (WPF version).</description>
+    <tags>wpf chrome browser</tags>
+  <copyright>Copyright © 2010-2013 The CefSharp Project</copyright>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.ComponentModel.DataAnnotations" />
+      <frameworkAssembly assemblyName="System.Windows.Browser" targetFramework="sl50" />
+      <frameworkAssembly assemblyName="System.Windows.Controls" targetFramework="sl50" />
+      <frameworkAssembly assemblyName="System.Windows.Controls.Navigation" targetFramework="sl50" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <!-- CefSharp files -->
+    <file src="..\Release\CefSharp.dll" target="lib\net40"/>
+    <file src="..\Release\CefSharp.Wpf.dll" target="lib\net40"/>
+
+    <!-- CEF/Chromium files -->
+    <file src="..\Release\avcodec-54.dll" target="cef"/>
+    <file src="..\Release\avformat-54.dll" target="cef"/>
+    <file src="..\Release\avutil-51.dll" target="cef"/>
+    <file src="..\Release\icudt.dll" target="cef"/>
+    <file src="..\Release\libcef.dll" target="cef"/>
+    <file src="..\Release\libcef.dll" target="cef"/>
+    <file src="..\Release\libEGL.dll" target="cef"/>
+    <file src="..\Release\libGLESv2.dll" target="cef"/>
+    <file src="..\Release\devtools_resources.pak" target="cef\devtools_resources.pak"/>
+
+    <!-- Only including en-US for now -->
+    <file src="..\Release\locales\en-US.pak" target="cef\locales"/>
+  </files>
+</package>

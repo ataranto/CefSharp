@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #pragma once
 
 using namespace System;
@@ -108,6 +108,12 @@ namespace CefSharp
         {
             bool get() { return _cefSettings->pack_loading_disabled; }
             void set(bool value) { _cefSettings->pack_loading_disabled = value; }
+        }
+
+		property String^ JavascripFlags
+        {
+            String^ get() { return toClr(_cefSettings->javascript_flags); }
+            void set(String^ value) { assignFromString(_cefSettings->javascript_flags, value); }
         }
     };
 }

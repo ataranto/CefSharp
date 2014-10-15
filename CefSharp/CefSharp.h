@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #pragma once
 
 #include <msclr/lock.h>
@@ -9,12 +9,13 @@
 #include "include/cef_task.h"
 #include "CookieVisitor.h"
 #include "Settings.h"
-#include "SchemeHandler.h"
+#include "SchemeHandlerWrapper.h"
 #include "StringUtil.h"
 
 using namespace System;
-using namespace System::IO;
 using namespace System::Collections::Generic;
+using namespace System::IO;
+using namespace System::Reflection;
 
 namespace CefSharp
 {
@@ -45,6 +46,14 @@ namespace CefSharp
         {
             _result = CefCookieManager::GetGlobalManager()->DeleteCookies(url, name);
             SetEvent(_event);
+        }
+
+        static void ParentProcessExitHandler(Object^ sender, EventArgs^ e)
+        {
+            if (CEF::IsInitialized)
+            {
+                CEF::Shutdown();
+            }
         }
 
     internal:
@@ -96,11 +105,16 @@ namespace CefSharp
             {
                 success = CefInitialize(*settings->_cefSettings, nullptr);
                 _initialized = success;
+				
+                if (_initialized)
+                {
+                    AppDomain::CurrentDomain->ProcessExit += gcnew EventHandler(ParentProcessExitHandler);
+                }
             }
             return success;
         }
 
-        static bool RegisterScheme(String^ schemeName, String^ hostName, bool is_standard, ISchemeHandlerFactory^ factory)
+        static bool RegisterScheme(String^ schemeName, String^ hostName, ISchemeHandlerFactory^ factory)
         {
             hostName = hostName ? hostName : String::Empty;
 
@@ -110,7 +124,7 @@ namespace CefSharp
 
         static bool RegisterScheme(String^ schemeName, ISchemeHandlerFactory^ factory)
         {
-            return RegisterScheme(schemeName, nullptr, true, factory);
+            return RegisterScheme(schemeName, nullptr, factory);
         }
 
         static bool RegisterJsObject(String^ name, Object^ objectToBind)

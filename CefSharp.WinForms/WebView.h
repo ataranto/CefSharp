@@ -46,6 +46,7 @@ namespace WinForms
         virtual event ConsoleMessageEventHandler^ ConsoleMessage;
         virtual event KeyEventHandler^ BrowserKey;
         virtual event LoadCompletedEventHandler^ LoadCompleted;
+		virtual event JavascriptContextCreatedEventHandler^ JavascriptContextCreated;
 
         WebView()
         {
@@ -146,6 +147,12 @@ namespace WinForms
             void set(IKeyboardHandler^ handler) { _browserCore->KeyboardHandler = handler; }
         }
 
+        virtual property IJsDialogHandler^ JsDialogHandler
+        {
+            IJsDialogHandler^ get() { return _browserCore->JsDialogHandler; }
+            void set(IJsDialogHandler^ handler) { _browserCore->JsDialogHandler = handler; }
+        }
+
         virtual void OnInitialized();
 
         virtual void Load(String^ url);
@@ -179,6 +186,7 @@ namespace WinForms
         virtual void OnFrameLoadEnd(String^ url);
         virtual void OnTakeFocus(bool next);
         virtual void OnConsoleMessage(String^ message, String^ source, int line);
+		virtual void OnJavascriptContextCreated();
 
         virtual void RegisterJsObject(String^ name, Object^ objectToBind);
         virtual IDictionary<String^, Object^>^ GetBoundObjects();

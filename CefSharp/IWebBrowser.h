@@ -1,9 +1,10 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #pragma once
 
 #include "BrowserCore.h"
 #include "ConsoleMessageEventArgs.h"
 #include "LoadCompletedEventArgs.h"
+#include "JavascriptContextCreatedHandler.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -15,6 +16,7 @@ namespace CefSharp
     interface class IRequestHandler;
     interface class IMenuHandler;
     interface class IKeyboardHandler;
+    interface class IJsDialogHandler;
 
     public interface class IWebBrowser : IDisposable, INotifyPropertyChanged
     {
@@ -38,6 +40,7 @@ namespace CefSharp
         property IRequestHandler^ RequestHandler;
         property IMenuHandler^ MenuHandler;
         property IKeyboardHandler^ KeyboardHandler;
+        property IJsDialogHandler^ JsDialogHandler;
 
         void OnInitialized();
 
@@ -67,6 +70,7 @@ namespace CefSharp
         void OnFrameLoadEnd(String^ url);
         void OnTakeFocus(bool next);
         void OnConsoleMessage(String^ message, String^ source, int line);
+		void OnJavascriptContextCreated();
 
         void RegisterJsObject(String^ name, Object^ objectToBind);
         IDictionary<String^, Object^>^ GetBoundObjects();
