@@ -634,6 +634,11 @@ namespace CefSharp
             LoadCompleted(this, args);
         }
 
+		void WebView::OnJavascriptContextCreated()
+        {
+            JavascriptContextCreated(this);
+        }
+
         void WebView::OnTakeFocus(bool next)
         {
             FocusNavigationDirection direction = next ?

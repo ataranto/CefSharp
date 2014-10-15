@@ -144,6 +144,7 @@
     <ClCompile Include="TypeUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="JavascriptContextCreatedHandler.h" />
     <ClInclude Include="IJsDialogHandler.h" />
     <ClInclude Include="Internals\JavascriptBinding\UnmanagedWrapper.h" />
     <ClInclude Include="Internals\JavascriptBinding\BindingHandler.h" />

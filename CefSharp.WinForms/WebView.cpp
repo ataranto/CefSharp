@@ -345,6 +345,11 @@ namespace WinForms
         LoadCompleted(this, args);
     }
 
+	void WebView::OnJavascriptContextCreated()
+    {
+        JavascriptContextCreated(this);
+    }
+
     void WebView::OnTakeFocus(bool next)
     {
         SelectNextControl(this, next, true, true, true);

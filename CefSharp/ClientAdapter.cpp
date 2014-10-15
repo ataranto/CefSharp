@@ -446,7 +446,7 @@ namespace CefSharp
             {
                 headers->Add(toClr(it->first), toClr(it->second));
             }
-            catch (Exception ^ex)
+            catch (Exception^)
             {
                 // adding a header with invalid characters can cause an exception to be
                 // thrown. we will drop those headers for now.
@@ -474,10 +474,13 @@ namespace CefSharp
 
     void ClientAdapter::_OnContextCreated(ClientAdapter* const _this, CefRefPtr<CefV8Context> context)
     {
+
         for each(KeyValuePair<String^, Object^>^ kvp in _this->_browserControl->GetBoundObjects())
         {
             BindingHandler::Bind(kvp->Key, kvp->Value, context->GetGlobal());
         }
+		
+        _this->_browserControl->OnJavascriptContextCreated();
     }
 
     void ClientAdapter::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
